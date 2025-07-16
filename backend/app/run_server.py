@@ -1,3 +1,5 @@
+__test__ = False  # evitar que pytest lo tome como caso de prueba
+
 import uvicorn
 from main import app
 

@@ -4,12 +4,16 @@ from fastapi.staticfiles import StaticFiles
 import os
 from routes import router
 
+# Leer orígenes permitidos desde variable de entorno
+origins_env = os.getenv("ALLOW_ORIGINS", "http://localhost:3000")
+allowed_origins = ["*"] if origins_env == "*" else [o.strip() for o in origins_env.split(",")]
+
 app = FastAPI(title="PDF Editor API", version="1.0.0")
 
 # Configurar CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # React dev server
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
